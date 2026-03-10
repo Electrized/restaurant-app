@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <title>Restaurant App</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
+
+    /* NAV */
+    nav { display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 1px solid #ccc; margin-bottom: 20px; }
+
+    /* BUTTONS */
+    button { padding: 8px 16px; background: #2563eb; color: white; border: none; cursor: pointer; border-radius: 4px; }
+    button.red { background: #dc2626; }
+    button.gray { background: #6b7280; }
+
+    /* INPUTS */
+    input, select, textarea { padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 100%; margin-top: 4px; box-sizing: border-box; }
+
+    /* LIST PAGE */
+    .list-layout { display: flex; gap: 20px; }
+    .list-sidebar { width: 220px; flex-shrink: 0; }
+    .list-main { flex: 1; }
+    .restaurant-item { border: 1px solid #ccc; padding: 12px; margin-bottom: 10px; border-radius: 4px; }
+
+    /* DETAIL PAGE */
+    .detail-layout { display: flex; gap: 20px; }
+    .detail-left { flex: 1; }
+    .detail-right { width: 260px; flex-shrink: 0; }
+    .booking-box { border: 1px solid #ccc; padding: 16px; border-radius: 4px; margin-top: 20px; }
+    table { border-collapse: collapse; width: 100%; }
+    td { padding: 6px 8px; border-bottom: 1px solid #eee; }
+
+    /* CONFIRM PAGE */
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    .info-box { background: #f5f5f5; padding: 16px; border-radius: 4px; }
+
+    /* LOGIN / REGISTER */
+    .auth-box { max-width: 360px; margin: 40px auto; }
+    .form-row { margin-bottom: 14px; }
+    .form-row label { display: block; margin-bottom: 4px; font-weight: bold; }
+
+    /* DONE PAGE */
+    .done-box { border: 1px solid #ccc; padding: 20px; max-width: 400px; margin: 20px auto; border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <strong><a href="#" onclick="show('list')" style="text-decoration:none;color:black;">Restaurant App</a></strong>
+  <div>
+    <a href="#" onclick="show('login')">Kirjaudu</a> &nbsp;
+    <a href="#" onclick="show('register')">Rekisteröidy</a>
+  </div>
+</nav>
+
+<!-- PAGE: LIST -->
+<div id="list">
+  <div class="list-layout">
+    <div class="list-sidebar">
+      <h3>Suodata ravintoloita</h3>
+      <div class="form-row">
+        <label>Sijainti:</label>
+        <select><option>Kaikki</option><option>Helsinki</option><option>Tampere</option><option>Oulu</option><option>Turku</option></select>
+      </div>
+      <div class="form-row">
+        <label>Saatavuus:</label>
+        <select><option>Kaikki</option><option>Korkea</option><option>Keskitaso</option><option>Matala</option></select>
+      </div>
+      <div class="form-row">
+        <label>Koko:</label>
+        <select><option>Kaikki</option><option>Pieni</option><option>Keskikokoinen</option><option>Suuri</option></select>
+      </div>
+      <button>Suodata</button>
+      <div style="background:#c8dfc0;height:160px;display:flex;align-items:center;justify-content:center;margin-top:16px;">[ Kartta ]</div>
+    </div>
+    <div class="list-main">
+      <h3>Ravintolat</h3>
+      <div class="restaurant-item"><a href="#" onclick="show('detail')">Ravintola Kettu</a><br>Helsinki &nbsp;|&nbsp; Saatavuus: Korkea</div>
+      <div class="restaurant-item"><a href="#" onclick="show('detail')">Pizzeria Napoli</a><br>Tampere &nbsp;|&nbsp; Saatavuus: Keskitaso</div>
+      <div class="restaurant-item"><a href="#" onclick="show('detail')">Grillikioski Matti</a><br>Oulu &nbsp;|&nbsp; Saatavuus: Matala</div>
+      <div class="restaurant-item"><a href="#" onclick="show('detail')">Kahvila Pulla</a><br>Turku &nbsp;|&nbsp; Saatavuus: Korkea</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: DETAIL -->
+<div id="detail" style="display:none">
+  <div class="detail-layout">
+    <div class="detail-left">
+      <div style="background:#ddd;height:200px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">[ Kuva ]</div>
+      <h2>Ravintola Esimerkki</h2>
+      <p>📍 Katuosoite 123, 00100 Helsinki</p>
+      <p>📞 +358 12 345 6789</p>
+      <p>🌐 <a href="#">www.ravintolaesimerkki.fi</a></p>
+
+      <div class="booking-box">
+        <h3>Varaa pöytä</h3>
+        <div style="display:flex;gap:12px;">
+          <div class="form-row" style="flex:1"><label>Päivämäärä:</label><input type="date"></div>
+          <div class="form-row" style="flex:1"><label>Aika:</label><input type="time" value="17:00"></div>
+        </div>
+        <div class="form-row"><label>Henkilömäärä:</label><input type="number" value="2" min="1"></div>
+        <button onclick="show('confirm')">Varaa pöytä</button>
+      </div>
+    </div>
+
+    <div class="detail-right">
+      <div style="background:#c8dfc0;height:160px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">[ Kartta ]</div>
+      <h3>Aukioloajat</h3>
+      <table>
+        <tr><td>Maanantai</td><td>11:00 - 22:00</td></tr>
+        <tr><td>Tiistai</td><td>11:00 - 22:00</td></tr>
+        <tr><td>Keskiviikko</td><td>11:00 - 22:00</td></tr>
+        <tr><td>Torstai</td><td>11:00 - 23:00</td></tr>
+        <tr><td>Perjantai</td><td>11:00 - 23:00</td></tr>
+        <tr><td>Lauantai</td><td>12:00 - 23:00</td></tr>
+        <tr><td>Sunnuntai</td><td style="color:red">Suljettu</td></tr>
+      </table>
+      <br>
+      <button class="gray" style="width:100%">Lisää suosikkeihin ♡</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: CONFIRM -->
+<div id="confirm" style="display:none">
+  <h2>Varausvahvistus</h2>
+  <div class="info-box">
+    <h3>Varauksen tiedot</h3>
+    <div class="info-grid">
+      <div><strong>Ravintola:</strong><br>Esimerkkiravintola</div>
+      <div><strong>Päivämäärä:</strong><br>24. Lokakuuta 2023</div>
+      <div><strong>Aika:</strong><br>19:00</div>
+      <div><strong>Henkilömäärä:</strong><br>4 henkilöä</div>
+      <div><strong>Varaajan nimi:</strong><br>Matti Meikäläinen</div>
+      <div><strong>Sähköposti:</strong><br>matti.meikalainen@example.com</div>
+      <div><strong>Puhelinnumero:</strong><br>040 123 4567</div>
+    </div>
+    <div style="text-align:right">
+      <button onclick="show('done')">Vahvista varaus</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: DONE -->
+<div id="done" style="display:none;text-align:center">
+  <h2>Varaus tehty!</h2>
+  <p>Vahvistus varauksestasi on lähetetty sähköpostiisi.</p>
+  <div class="done-box" style="text-align:left">
+    <h3>Varauksen tiedot</h3>
+    <p>Ravintola: Esimerkkiravintola</p>
+    <p>Päivämäärä: 24.10.2026</p>
+    <p>Aika: 19:00</p>
+    <p>Henkilömäärä: 4</p>
+    <br>
+    <button style="width:100%;margin-bottom:8px" onclick="show('edit')">Muokkaa varausta</button>
+    <button class="red" style="width:100%" onclick="show('list')">Peruuta varaus</button>
+  </div>
+</div>
+
+<!-- PAGE: EDIT -->
+<div id="edit" style="display:none">
+  <h2>Varauksen muokkaus</h2>
+  <div style="max-width:600px">
+    <div class="form-row"><label>Ravintola:</label><input type="text" value="Ravintola Esimerkki"></div>
+    <div class="form-row"><label>Päivämäärä:</label><input type="date"></div>
+    <div class="form-row"><label>Aika:</label><input type="time" value="19:00"></div>
+    <div class="form-row"><label>Henkilömäärä:</label><input type="number" value="4"></div>
+    <div class="form-row"><label>Erityistoiveet:</label><textarea>Ikkunapöytä, jos mahdollista.</textarea></div>
+    <div style="text-align:right;margin-top:8px">
+      <button class="gray" onclick="show('done')">Peruuta</button> &nbsp;
+      <button onclick="show('done')">Tallenna muutokset</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: LOGIN -->
+<div id="login" style="display:none">
+  <div class="auth-box">
+    <h2>Kirjaudu sisään</h2>
+    <div class="form-row"><label>Sähköposti:</label><input type="email" placeholder="Sähköposti"></div>
+    <div class="form-row"><label>Salasana:</label><input type="password" placeholder="Salasana"></div>
+    <button style="width:100%" onclick="show('list')">Kirjaudu</button>
+    <p style="text-align:center;margin-top:12px">Eikö sinulla ole tiliä? <a href="#" onclick="show('register')">Rekisteröidy tästä</a></p>
+  </div>
+</div>
+
+<!-- PAGE: REGISTER -->
+<div id="register" style="display:none">
+  <div class="auth-box">
+    <h2>Rekisteröidy</h2>
+    <div class="form-row"><label>Sähköposti:</label><input type="email" placeholder="Syötä sähköpostiosoitteesi"></div>
+    <div class="form-row"><label>Salasana:</label><input type="password" placeholder="Syötä salasanasi"></div>
+    <div class="form-row"><label>Vahvista salasana:</label><input type="password" placeholder="Vahvista salasanasi"></div>
+    <button style="width:100%" onclick="show('list')">Rekisteröidy</button>
+    <p style="text-align:center;margin-top:12px">Onko sinulla jo tili? <a href="#" onclick="show('login')">Kirjaudu sisään</a></p>
+  </div>
+</div>
+
+<hr>
+<p style="text-align:center;color:gray">© 2023 Restaurant App</p>
+
+<script>
+  function show(id) {
+    var pages = ['list','detail','confirm','done','edit','login','register'];
+    for (var i = 0; i < pages.length; i++) {
+      document.getElementById(pages[i]).style.display = 'none';
+    }
+    document.getElementById(id).style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
